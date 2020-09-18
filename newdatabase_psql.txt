@@ -1,0 +1,23 @@
+postgres=# create database MusicShop;
+CREATE DATABASE
+postgres=# create user shopkeeper with password '1111';
+CREATE ROLE
+postgres=# alter database MusicShop owner to shopkeeper;
+ALTER DATABASE
+postgres-# exit
+Введите \q для выхода.
+postgres-# \q
+
+C:\Users\79035>psql -U shopkeeper -d musicshop
+Пароль пользователя shopkeeper:
+psql (12.4)
+Введите "help", чтобы получить справку.
+
+musicshop=> create table if not exists Genre(Id serial primary key, GenreName varchar(40) not null);
+CREATE TABLE
+musicshop=> create table if not exists Singer(Id serial primary key ,Name varchar(40) not null , GenreId integer references Genre(Id));
+CREATE TABLE
+musicshop=> create table if not exists Album(Id serial primary key, IdSinger integer references Singer(Id), Album_title varchar(50) not null, Year date not null);
+CREATE TABLE
+musicshop=> create table if not exists Song(Id serial primary key, IdAlbum integer references Album(Id), Song_Name varchar(50) not null, Duration numeric(5, 2));
+CREATE TABLE
