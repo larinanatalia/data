@@ -1,0 +1,36 @@
+
+C:\Users\79035>chcp 1251
+Текущая кодовая страница: 1251
+
+C:\Users\79035>psql -U postgres
+Пароль пользователя postgres:
+psql (12.4)
+Введите "help", чтобы получить справку.
+
+postgres=# create database musicshop;
+CREATE DATABASE
+postgres=# alter database musicshop owner to shopkeeper;
+ALTER DATABASE
+postgres=# exit
+
+C:\Users\79035>psql -U shopkeeper -b musicshop
+Пароль пользователя shopkeeper:
+psql (12.4)
+Введите "help", чтобы получить справку.
+
+musicshop=> create table singer(Id serial primary key, Name varchar(40) not null);
+CREATE TABLE
+musicshop=> create table if not exists Album(Id serial primary key, AlbumTitle varchar(50) not null, Year date not null);
+CREATE TABLE
+musicshop=> create table if not exists Song(Id serial primary key, IdAlbum integer references Album(Id), SongName varchar(50) not null, Duration integer);
+CREATE TABLE
+musicshop=> create table if not exists Genre(Id serial primary key, GenreName varchar(40) not null);
+CREATE TABLE
+musicshop=>  create table if not exists SingerGenre(IdGenre integer references Genre(Id), IdSinger integer references Singer(Id), constraint sg primary key(IdGenre,IdSinger));
+CREATE TABLE
+musicshop=> create table if not exists Collection(Id serial primary key, Name varchar(50) not null, Year date not null);
+CREATE TABLE
+musicshop=> create table if not exists CollectionSong(IdCollection integer references Collection(Id), IdSong integer references Song(Id), constraint cs primary key(IdCollection, IdSong));
+CREATE TABLE
+musicshop=> create table if not exists SingerAlbum(IdSinger integer references Singer(Id), IdAlbum integer references Album(Id), constraint sa primary key(IdSinger,IdAlbum));
+CREATE TABLE
