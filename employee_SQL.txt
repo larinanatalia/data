@@ -1,0 +1,10 @@
+
+
+additionally=> create table Employee(Id serial primary key, Name varchar(60) not null);
+CREATE TABLE
+additionally=> create table if not exists Department(Name varchar(40) primary key not null);
+CREATE TABLE
+additionally=> create table if not exists Manager(Id serial primary key,IdEmployee integer references Employee(Id), DepartmentName varchar(40) references Department(Name));
+CREATE TABLE
+additionally=> alter table employee add column IdManager integer references Manager(Id);
+ALTER TABLE
